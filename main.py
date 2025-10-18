@@ -8,47 +8,44 @@ def print_menu():
     print("4. Delete Task")
     print("5. Exit")
 
-def get_user_choice() -> str:
-    return input("\nEnter your choice: ")
+def get_user_choice() -> int:
+    return int(input("\nEnter your choice: "))
+
+def get_task_id(message: str) -> int:
+    return int(input(message))
 
 def main():
     task_manager = TaskManager()
 
     while True:
         print_menu()
-
         choice = get_user_choice()
 
-        match choice:
-            case "1":
-                description = input("Enter task description: ")
-                task_manager.add_task(description)
-                continue
-            case "2":
-                tasks = task_manager.list_tasks()
-                for task in tasks:
-                    print(task)
-                continue
-            case "3":
-                try:
-                    task_id = int(input("Enter task ID to complete: "))
+        try:      
+            match choice:
+                case 1:
+                    description = input("Enter task description: ")
+                    task_manager.add_task(description)
+                    continue
+                case 2:
+                    tasks = task_manager.list_tasks()
+                    for task in tasks:
+                        print(task)
+                    continue
+                case 3:
+                    task_id = get_task_id(message="Enter task ID to complete: ")
                     task_manager.complete_task(task_id)
-                except ValueError:
-                    print("Invalid ID. Please enter a number.")
-                continue
-            case "4":
-                try:
-                    task_id = int(input("Enter task ID to delete: "))
+                case 4:
+                    task_id = get_task_id(message="Enter task ID to delete: ")
                     task_manager.delete_task(task_id)
-                except ValueError:
-                    print("Invalid ID. Please enter a number.")
-                continue
-            case "5":
-                print("Exiting Task Manager....")
-                break
-            case _:
-                print("Invalid choice. Please try again.")
-                continue
+                case 5:
+                    print("Exiting task manager....")
+                    break
+                case _:
+                    print("Invalid choice. Please try again.")
+                    continue
+        except ValueError:
+            print("Invalid input. Please enter a number.")
 
 if __name__ == "__main__":
     main()
