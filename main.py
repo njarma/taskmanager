@@ -1,16 +1,23 @@
 from task_manager import TaskManager
 
+def print_menu():
+    print("\n~ Task manager menu ~")
+    print("1. Add Task")
+    print("2. List Tasks")
+    print("3. Complete Task")
+    print("4. Delete Task")
+    print("5. Exit")
+
+def get_user_choice() -> str:
+    return input("\nEnter your choice: ")
+
 def main():
     task_manager = TaskManager()
 
     while True:
-        print("\n~ Task manager menu ~")
-        print("1. Add Task")
-        print("2. List Tasks")
-        print("3. Complete Task")
-        print("4. Delete Task")
-        print("5. Exit")
-        choice = input("\nEnter your choice: ")
+        print_menu()
+
+        choice = get_user_choice()
 
         match choice:
             case "1":

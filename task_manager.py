@@ -8,8 +8,8 @@ class Task:
         self.completed = True
 
     def __str__(self):
-        status = "Completed" if self.completed else "Pending"
-        return f"\nTask ID: {self.id}\nDescription: {self.description}\nStatus: {status}"
+        status = "✓" if self.completed else " "
+        return f"[{status}] {self.id}: {self.description}"
     
 class TaskManager:
     def __init__(self):
@@ -32,18 +32,17 @@ class TaskManager:
             return []
         return list(self.tasks.values())
 
-    def complete_task(self, task_id) -> bool:
+    def complete_task(self, task_id):
         if task_id in self.tasks:
             self.get_task(task_id).mark_completed()
-            print(f"\nTask {self.get_task(task_id)} marked as completed.")
-            return True
+            print(f"\nTask {self.get_task(task_id)} -> marked as completed.")
         print(f"\nTask {task_id} not found.")
-        return False
    
-    def delete_task(self, task_id) -> bool:
-        if task_id in self.tasks:
-            del self.tasks[task_id]
-            print(f"\nTask {task_id} deleted.")
-            return True
-        print(f"\nTask {task_id} not found.")
-        return False
+    def delete_task(self, task_id):
+        if task_id not in self.tasks:
+            print(f"\nTask {task_id} not found.")
+            return
+
+        del self.tasks[task_id]
+        print(f"\nTask {task_id} -> deleted.")
+            
