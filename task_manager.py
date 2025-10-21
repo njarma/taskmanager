@@ -18,6 +18,8 @@ class TaskManager:
     FILENAME = "tasks.json"
 
     def __init__(self):
+        self._tasks = {}
+        self._next_id = 1
         self.load_tasks()
 
     def add_task(self, description) -> int:
@@ -68,6 +70,10 @@ class TaskManager:
                 if self._tasks:
                     self._next_id = max(self._tasks.keys()) + 1
         except FileNotFoundError:
+            self._tasks = {}
+            self._next_id = 1
+        except json.JSONDecodeError:
+            print("Error: Invalid JSON format in tasks file.")
             self._tasks = {}
             self._next_id = 1
 
