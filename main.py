@@ -1,12 +1,14 @@
 from task_manager import TaskManager
+from ai_service import create_simple_tasks
 
 def print_menu():
     print("\n~ Task manager menu ~")
     print("1. Add Task")
-    print("2. List Tasks")
-    print("3. Complete Task")
-    print("4. Delete Task")
-    print("5. Exit")
+    print("2. Add complex task (using AI)")
+    print("3. List Tasks")
+    print("4. Complete Task")
+    print("5. Delete Task")
+    print("6. Exit")
 
 def get_user_choice() -> int:
     return int(input("\nEnter your choice: "))
@@ -28,17 +30,27 @@ def main():
                     task_manager.add_task(description)
                     continue
                 case 2:
+                    description = input("Enter complex task description: ")
+                    subtasks = create_simple_tasks(description)
+                    for subtask in subtasks:
+                        if not subtask.startswith("Error"):
+                            task_manager.add_task(subtask)
+                        else:
+                            print(subtask)
+                            break
+                    continue
+                case 3:
                     tasks = task_manager.list_tasks()
                     for task in tasks:
                         print(task)
                     continue
-                case 3:
+                case 4:
                     task_id = get_task_id(message="Enter task ID to complete: ")
                     task_manager.complete_task(task_id)
-                case 4:
+                case 5:
                     task_id = get_task_id(message="Enter task ID to delete: ")
                     task_manager.delete_task(task_id)
-                case 5:
+                case 6:
                     print("Exiting task manager....")
                     break
                 case _:
